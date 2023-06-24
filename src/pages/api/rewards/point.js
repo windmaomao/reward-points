@@ -1,14 +1,16 @@
+const cutoffs = [100, 50];
+const multipliers = [2, 1];
+
 export function point(amount) {
   let total = amount;
   let rewards = 0;
+  const n = cutoffs.length;
 
-  if (total > 100) {
-    rewards += (total - 100) * 2;
-    total = 100;
-  }
-
-  if (total > 50) {
-    rewards += (total - 50) * 1;
+  for (let i = 0; i < n; i++) {
+    if (total > cutoffs[i]) {
+      rewards += (total - cutoffs[i]) * multipliers[i];
+      total = cutoffs[i];
+    }
   }
 
   return rewards;
