@@ -24,7 +24,7 @@ export default function Home() {
         <div className={styles.grid}>
           <div className={styles.card}>
             <h2>Customer Rewards</h2>
-            <p>Here is your monthly points.</p>
+            <p>Here is the monthly reward points.</p>
           </div>
         </div>
         <RewardsTable />

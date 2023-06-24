@@ -18,11 +18,14 @@
 }
 .card h3 {
   margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .table {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 .row {
   display: flex;
