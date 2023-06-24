@@ -1,34 +1,59 @@
-import { groupBy } from 'lodash';
+import { group } from './group';
 
 function _t(user, date, amount) {
   return { user, date, amount };
 }
 
-// for each customer
-// group transcations by month
-function group(transactions) {
-  const userMap = groupBy(transactions, 'user');
-
-  Object.keys(userMap).forEach((user) => {
-    const dateMap = groupBy(userMap[user], 'date');
-    userMap[user] = dateMap;
-  });
-
-  console.log(userMap);
-  return userMap;
-}
-
 describe('group transactions', () => {
   it('should group by users', () => {
-    const transactions = [_t('a', 'Jan', 1), _t('b', 'Feb', 5)];
-    const groups = group(transactions);
-    expect(Object.values(groups).length).toBe(2);
+    const list = group([
+      _t('a', '01', 1),
+      _t('b', '02', 5),
+    ]);
+
+    // console.log(list);
+    expect(list).toHaveLength(2);
   });
 
-  it('should group by a user and months', () => {
-    const transactions = [_t('a', 'Feb', 1), _t('a', 'Jan', 5)];
-    const groups = group(transactions);
-    expect(Object.values(groups).length).toBe(1);
-    expect(Object.values(groups['a']).length).toBe(2);
+  it('should sort user groups', () => {
+    const list = group([
+      _t('b', '01', 1),
+      _t('a', '02', 5),
+    ]);
+
+    expect(list[0].user).toBe('a');
+  });
+
+  it('should group by a user and dates', () => {
+    const list = group([
+      _t('a', '01', 1),
+      _t('a', '02', 5),
+    ]);
+
+    // console.log(list[0]);
+    expect(list).toHaveLength(1);
+    expect(list[0].dates).toHaveLength(2);
+  });
+
+  it('should sort a user dates', () => {
+    const list = group([
+      _t('a', '02', 1),
+      _t('a', '01', 5),
+    ]);
+
+    expect(list).toHaveLength(1);
+    expect(list[0].dates[0].date).toBe('01');
+  });
+
+  it('should group by a user and a date', () => {
+    const list = group([
+      _t('a', '02', 1),
+      _t('a', '01', 5),
+      _t('a', '02', 3),
+    ]);
+
+    // console.log(list[0].dates[1]);
+    expect(list).toHaveLength(1);
+    expect(list[0].dates[1].amounts).toHaveLength(2);
   });
 });

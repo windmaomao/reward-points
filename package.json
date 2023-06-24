@@ -19,5 +19,11 @@
   },
   "devDependencies": {
     "jest": "^29.5.0"
+  },
+  "prettier": {
+    "printWidth": 60,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "singleQuote": true
   }
 }
